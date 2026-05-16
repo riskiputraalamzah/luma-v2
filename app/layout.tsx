@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
+import { Suspense } from 'react';
 import { ClientLayoutBackground } from '@/components/ClientLayoutBackground';
+import { PageTransition } from '@/components/PageTransition';
 import './globals.css';
 
 const inter = Inter({
@@ -26,7 +28,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased font-sans bg-[#07080F] text-slate-100 overflow-x-hidden min-h-screen flex flex-col relative">
         <ClientLayoutBackground />
         <div className="pt-16 flex-1 flex flex-col">
-          {children}
+          <Suspense fallback={<div className="flex-1" />}>
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </Suspense>
         </div>
       </body>
     </html>

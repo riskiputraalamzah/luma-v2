@@ -93,6 +93,7 @@ export default function ReflectionPage() {
   const t = translations[language] || translations.en;
 
   const [step, setStep] = useState(0);
+  const [showOnboarding, setShowOnboarding] = useState(true);
   const [answers, setAnswers] = useState<Partial<ReflectionData>>({
     mood: 5, sleep: 6, screenTime: 8, stress: 5, energy: 5, social: 5, productivity: 5, shortText: '',
   });
@@ -132,6 +133,64 @@ export default function ReflectionPage() {
 
   return (
     <main className="flex-1 flex flex-col items-center justify-center py-16 px-6 relative min-h-[100dvh]">
+
+      {/* Onboarding screen */}
+      <AnimatePresence mode="wait">
+        {showOnboarding ? (
+          <motion.div
+            key="onboarding"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20, filter: 'blur(8px)' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col items-center text-center gap-8 max-w-lg relative z-10"
+          >
+            {/* Orb icon */}
+            <div className="relative w-16 h-16">
+              <motion.div
+                animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0, 0.3] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeOut' }}
+                className="absolute inset-0 rounded-full border border-indigo-500/30"
+              />
+              <div className="absolute inset-2 rounded-full glass-card-strong flex items-center justify-center"
+                style={{ boxShadow: '0 0 25px rgba(99,102,241,0.25)' }}
+              >
+                <svg className="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                </svg>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <h2 className="text-2xl md:text-3xl font-display font-light text-white/85 tracking-tight">{t.onboardingTitle}</h2>
+              <p className="text-sm text-white/45 font-light leading-relaxed">{t.onboardingDesc}</p>
+            </div>
+
+            <div className="glass-card px-5 py-3 flex items-center gap-3">
+              <svg className="w-4 h-4 text-indigo-400/60 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p className="text-xs text-white/35 font-light">{t.onboardingNote}</p>
+            </div>
+
+            <button
+              onClick={() => setShowOnboarding(false)}
+              className="group flex items-center gap-3 px-10 py-3.5 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white transition-all duration-300 text-sm tracking-widest uppercase font-light shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:shadow-[0_0_50px_rgba(99,102,241,0.6)]"
+            >
+              {t.onboardingStart}
+              <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </button>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="questions"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full flex flex-col items-center"
+          >
 
       {/* Subtle reactive glow */}
       <motion.div
@@ -254,6 +313,11 @@ export default function ReflectionPage() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </main>
   );
 }

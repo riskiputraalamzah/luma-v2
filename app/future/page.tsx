@@ -275,15 +275,27 @@ export default function FuturePage() {
         </AnimatePresence>
       </div>
 
-      {/* ── Bottom CTA ──────────────────────────────────────── */}
+      {/* ── Bottom CTAs ─────────────────────────────────────── */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.8 }}
+          className="flex items-center gap-3"
         >
+          {/* Read Your Letter */}
+          <Link href="/letter">
+            <button className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-indigo-600/90 hover:bg-indigo-500 text-white text-[10px] uppercase tracking-widest transition-all duration-300 shadow-[0_0_24px_rgba(99,102,241,0.4)] hover:shadow-[0_0_36px_rgba(99,102,241,0.6)]">
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+              {t.readYourLetter}
+            </button>
+          </Link>
+
+          {/* Restart */}
           <Link href="/">
-            <button className="flex items-center gap-2.5 px-7 py-3 glass rounded-full text-[10px] uppercase tracking-widest text-white/35 hover:text-white/70 transition-all duration-300 hover:border-white/20 hover:bg-white/5">
+            <button className="flex items-center gap-2 px-5 py-3 glass rounded-full text-[10px] uppercase tracking-widest text-white/35 hover:text-white/70 transition-all duration-300 hover:border-white/20">
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
               </svg>

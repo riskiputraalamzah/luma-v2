@@ -295,6 +295,27 @@ export default function DashboardPage() {
               </button>
             </motion.div>
 
+            {/* Your Card CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+            >
+              <Link href="/card">
+                <div className="glass-card p-5 flex items-center justify-between cursor-pointer group hover:border-violet-500/25 hover:shadow-[0_0_30px_rgba(139,92,246,0.12)] transition-all duration-400">
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-[10px] uppercase tracking-widest text-white/25 font-mono">{t.yourReflectionCard}</span>
+                    <span className="text-sm font-light text-white/65 group-hover:text-white/85 transition-colors">{t.cardTagline}</span>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-violet-500/20 group-hover:border-violet-400/50 flex items-center justify-center transition-all duration-300 group-hover:bg-violet-600/15 flex-shrink-0">
+                    <svg className="w-3.5 h-3.5 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+
             {/* Restart */}
             <motion.div
               initial={{ opacity: 0 }}

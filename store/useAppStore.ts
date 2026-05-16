@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export type Language = 'en' | 'id';
 
@@ -34,7 +35,7 @@ export interface AIAnalysisResult {
 
 interface AppState {
   language: Language;
-  analysisLanguage: Language | null; // language used when AI ran
+  analysisLanguage: Language | null;
   setLanguage: (lang: Language) => void;
   reflectionData: ReflectionData | null;
   aiAnalysisResult: AIAnalysisResult | null;
@@ -44,14 +45,21 @@ interface AppState {
   reset: () => void;
 }
 
-export const useAppStore = create<AppState>((set) => ({
-  language: 'en',
-  analysisLanguage: null,
-  setLanguage: (lang) => set({ language: lang }),
-  reflectionData: null,
-  aiAnalysisResult: null,
-  setReflectionData: (data) => set({ reflectionData: data }),
-  setAiAnalysisResult: (result) => set({ aiAnalysisResult: result }),
-  setAnalysisLanguage: (lang) => set({ analysisLanguage: lang }),
-  reset: () => set({ reflectionData: null, aiAnalysisResult: null, analysisLanguage: null }),
-}));
+export const useAppStore = create<AppState>()(
+  persist(
+    (set) => ({
+      language: 'en',
+      analysisLanguage: null,
+      setLanguage: (lang) => set({ language: lang }),
+      reflectionData: null,
+      aiAnalysisResult: null,
+      setReflectionData: (data) => set({ reflectionData: data }),
+      setAiAnalysisResult: (result) => set({ aiAnalysisResult: result }),
+      setAnalysisLanguage: (lang) => set({ analysisLanguage: lang }),
+      reset: () => set({ reflectionData: null, aiAnalysisResult: null, analysisLanguage: null }),
+    }),
+    {
+      name: 'luma-store',
+    },
+  ),
+);

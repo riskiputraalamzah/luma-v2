@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useAppStore } from '@/store/useAppStore';
 import { translations } from '@/lib/translations';
+import { Footer } from '@/components/Footer';
 
 const FEATURE_ITEMS = [
   {
@@ -49,6 +50,18 @@ const FEATURE_ITEMS = [
   },
 ];
 
+const STEP_ICONS = [
+  <svg key="s1" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+  </svg>,
+  <svg key="s2" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+  </svg>,
+  <svg key="s3" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.58-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+  </svg>,
+];
+
 export default function LandingPage() {
   const language = useAppStore(state => state.language);
   const t = translations[language] || translations.en;
@@ -58,6 +71,18 @@ export default function LandingPage() {
     { title: t.digitalOverload, desc: t.digitalOverloadDesc, ...FEATURE_ITEMS[1] },
     { title: t.disconnectedRoutines, desc: t.disconnectedRoutinesDesc, ...FEATURE_ITEMS[2] },
     { title: t.hiddenBurnout, desc: t.hiddenBurnoutDesc, ...FEATURE_ITEMS[3] },
+  ];
+
+  const steps = [
+    { num: '01', title: t.step1Title, desc: t.step1Desc, color: 'indigo' },
+    { num: '02', title: t.step2Title, desc: t.step2Desc, color: 'violet' },
+    { num: '03', title: t.step3Title, desc: t.step3Desc, color: 'emerald' },
+  ];
+
+  const stats = [
+    { value: t.problemStat1, label: t.problemStat1Desc },
+    { value: t.problemStat2, label: t.problemStat2Desc },
+    { value: t.problemStat3, label: t.problemStat3Desc },
   ];
 
   return (
@@ -127,6 +152,36 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
+      {/* ── Problem / Stats Section ─────────────────────────── */}
+      <section className="w-full max-w-5xl mx-auto px-6 pb-32">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <p className="text-[10px] font-mono tracking-[0.4em] uppercase text-rose-400/50 mb-3">{t.problemTitle}</p>
+          <p className="text-lg md:text-xl font-display font-light text-white/75 italic">{t.problemTagline}</p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {stats.map((stat, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.15, duration: 0.7 }}
+              className="glass-card p-8 text-center group hover:border-rose-500/15 transition-all duration-500"
+            >
+              <p className="text-4xl md:text-5xl font-display font-light gradient-text mb-3">{stat.value}</p>
+              <p className="text-xs text-white/35 font-light leading-relaxed">{stat.label}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* ── Features Section ─────────────────────────────────── */}
       <section className="w-full max-w-6xl mx-auto px-6 pb-32">
         <motion.div
@@ -161,6 +216,69 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── How It Works Section ──────────────────────────────── */}
+      <section className="w-full max-w-4xl mx-auto px-6 pb-32">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <p className="text-[10px] font-mono tracking-[0.4em] uppercase text-white/25 mb-3">{t.howItWorks}</p>
+        </motion.div>
+
+        <div className="flex flex-col gap-6">
+          {steps.map((step, idx) => {
+            const colors: Record<string, { border: string; icon: string; glow: string }> = {
+              indigo: { border: 'border-indigo-500/20', icon: 'text-indigo-400 bg-indigo-500/10', glow: 'rgba(99,102,241,0.15)' },
+              violet: { border: 'border-violet-500/20', icon: 'text-violet-400 bg-violet-500/10', glow: 'rgba(139,92,246,0.15)' },
+              emerald: { border: 'border-emerald-500/20', icon: 'text-emerald-400 bg-emerald-500/10', glow: 'rgba(52,211,153,0.15)' },
+            };
+            const c = colors[step.color];
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.15, duration: 0.7 }}
+                className={`glass-card p-7 flex items-start gap-6 group hover:shadow-[0_0_30px_${c.glow}] transition-all duration-500 ${c.border}`}
+              >
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 ${c.icon} border ${c.border}`}>
+                  {STEP_ICONS[idx]}
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-mono text-white/20 tracking-widest">{step.num}</span>
+                    <h3 className="text-sm font-semibold uppercase tracking-widest text-white/80">{step.title}</h3>
+                  </div>
+                  <p className="text-sm text-white/40 font-light leading-relaxed">{step.desc}</p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* CTA after steps */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.7 }}
+          className="text-center mt-12"
+        >
+          <Link href="/reflection">
+            <button className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-indigo-600 hover:bg-indigo-500 transition-all duration-300 text-white font-medium tracking-wide text-sm shadow-[0_0_40px_rgba(99,102,241,0.4)] hover:shadow-[0_0_60px_rgba(99,102,241,0.6)]">
+              {t.startBtn}
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </button>
+          </Link>
+        </motion.div>
+      </section>
+
       {/* ── Footer Quote ─────────────────────────────────────── */}
       <motion.div
         className="pb-20 text-center"
@@ -172,6 +290,9 @@ export default function LandingPage() {
         <div className="divider w-24 mx-auto mb-8" />
         <p className="text-[11px] text-white/20 font-mono tracking-[0.5em] uppercase">{t.mirrorText}</p>
       </motion.div>
+
+      {/* ── Footer ───────────────────────────────────────────── */}
+      <Footer />
     </main>
   );
 }
