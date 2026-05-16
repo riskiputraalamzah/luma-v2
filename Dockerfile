@@ -2,7 +2,6 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 
-# Install only production + build deps
 COPY package.json package-lock.json ./
 RUN npm ci
 
@@ -31,8 +30,11 @@ ENV HOSTNAME="0.0.0.0"
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy only what's needed from the standalone build
+# Copy public assets (may be empty but folder must exist)
+RUN mkdir -p ./public
 COPY --from=builder /app/public ./public
+
+# Copy standalone build output
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
@@ -40,5 +42,4 @@ USER nextjs
 
 EXPOSE 8080
 
-# Cloud Run sets PORT=8080 by default
 CMD ["node", "server.js"]
